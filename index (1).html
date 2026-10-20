@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Painel IFPA 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: cabeçalho com contagem regressiva, abas fixas, conteúdo em coluna de leitura com grades que viram uma coluna no celular */
+:root{
+  --bg:#f5f7f4; --surface:#ffffff; --sunk:#e9eee8; --fg:#17201a; --muted:#56635a; --line:#d3dcd3;
+  --accent:#1f7a3e; --accent-ink:#ffffff; --accent-soft:#dcefe2;
+  --alert:#b3261e; --alert-soft:#f8e1de; --warn:#8a5a00; --warn-soft:#f6ecd2;
+  --ok:#1f7a3e; --ok-soft:#dcefe2; --info:#1d5a8c; --info-soft:#dde9f4;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101512; --surface:#18201b; --sunk:#202a23; --fg:#e6ede7; --muted:#9aa89e; --line:#2e3a32;
+  --accent:#4cbf72; --accent-ink:#0b130e; --accent-soft:#1f3a29;
+  --alert:#f08a80; --alert-soft:#3d1f1c; --warn:#e5b14d; --warn-soft:#3a2f17;
+  --ok:#4cbf72; --ok-soft:#1f3a29; --info:#7db6e8; --info-soft:#1b2c3c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101512; --surface:#18201b; --sunk:#202a23; --fg:#e6ede7; --muted:#9aa89e; --line:#2e3a32;
+  --accent:#4cbf72; --accent-ink:#0b130e; --accent-soft:#1f3a29;
+  --alert:#f08a80; --alert-soft:#3d1f1c; --warn:#e5b14d; --warn-soft:#3a2f17;
+  --ok:#4cbf72; --ok-soft:#1f3a29; --info:#7db6e8; --info-soft:#1b2c3c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:1.6rem;font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+.lede{color:var(--muted);max-width:65ch}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* topo */
+header.top{background:var(--surface);border-bottom:1px solid var(--line)}
+header.top .wrap{padding-block:22px 18px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+.brand h1{font-size:clamp(1.6rem,4vw,2.3rem);font-weight:800}
+.brand p{color:var(--muted);margin-top:4px}
+.count{display:flex;gap:8px}
+.count div{background:var(--sunk);border-radius:8px;padding:8px 10px;min-width:64px;text-align:center}
+.count b{display:block;font-family:var(--f-mono);font-size:1.6rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.count span{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.count-label{font-size:.85rem;color:var(--muted);margin-bottom:6px;text-align:right}
+@media (max-width:720px){header.top .wrap{grid-template-columns:1fr}.count-label{text-align:left}.count div{min-width:0;flex:1}}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.tabs button{font:600 .95rem var(--f-body);color:var(--muted);background:none;border:0;border-bottom:3px solid transparent;padding:12px 12px 10px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+nav.tabs button:focus-visible,.btn:focus-visible,.opt:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+main .wrap{padding-block:28px 64px;display:grid;gap:28px}
+section.view{display:grid;gap:24px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:820px){.g3{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:10px;align-content:start;min-width:0}
+.callout{border-radius:10px;padding:14px 16px;display:grid;gap:4px}
+.callout.alert{background:var(--alert-soft);color:var(--fg);border-left:4px solid var(--alert)}
+.callout.warn{background:var(--warn-soft);border-left:4px solid var(--warn)}
+.callout.info{background:var(--info-soft);border-left:4px solid var(--info)}
+.callout strong{font-family:var(--f-display)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.95rem}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;font-weight:600}
+.pill{display:inline-block;font:700 .72rem var(--f-mono);letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--sunk);color:var(--muted)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.alert{background:var(--alert-soft);color:var(--alert)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.info{background:var(--info-soft);color:var(--info)}
+.big{font-family:var(--f-display);font-size:2rem;font-weight:800;line-height:1}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+td.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr.hl td{background:var(--accent-soft)}
+tr.past td{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+tr.next td{background:var(--warn-soft);font-weight:600}
+
+/* barras */
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;font-size:.9rem}
+.bar .track{height:14px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:4px}
+.bar .fill.spec{background:var(--info)}
+.bar b{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:480px){.bar{grid-template-columns:110px 1fr 40px}}
+
+.seg{display:inline-flex;background:var(--sunk);border-radius:8px;padding:3px;gap:3px;flex-wrap:wrap}
+.seg button{font:600 .9rem var(--f-body);border:0;background:none;color:var(--muted);padding:7px 14px;border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+
+.topic{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:8px}
+.topic:first-child{border-top:0;padding-top:0}
+.topic-head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{font-size:.88rem;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:5px 10px;color:var(--fg);background:var(--bg)}
+.links a:hover{border-color:var(--accent);color:var(--accent)}
+.links a .k{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);margin-right:6px;text-transform:uppercase}
+ul.tight{margin:0;padding-left:20px;display:grid;gap:4px}
+
+/* simulados */
+.btn{font:700 .95rem var(--f-body);border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:10px 18px;border-radius:8px;cursor:pointer}
+.btn.ghost{background:none;color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+select{font:600 .95rem var(--f-body);padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);max-width:100%}
+.simbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 50px);z-index:4}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:12px}
+.q .stem{font-size:1.02rem;max-width:72ch}
+.q .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.opts{display:grid;gap:6px}
+.opt{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 12px;cursor:pointer}
+.opt .L{font-family:var(--f-mono);font-weight:700;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--sunk);font-size:.85rem}
+.opt[aria-pressed="true"]{border-color:var(--accent)}
+.opt[aria-pressed="true"] .L{background:var(--accent);color:var(--accent-ink)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.right .L{background:var(--ok);color:var(--accent-ink)}
+.opt.wrong{border-color:var(--alert);background:var(--alert-soft)}
+.opt.wrong .L{background:var(--alert);color:var(--bg)}
+.opt:disabled{cursor:default}
+.expl{font-size:.93rem;background:var(--sunk);border-radius:8px;padding:10px 12px}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.score .card .big{font-size:1.8rem}
+.hist li{display:flex;justify-content:space-between;gap:10px;font-size:.92rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+footer{color:var(--muted);font-size:.85rem}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="eyebrow">Edital nº 5-IFPA · 18/09/2026 · Banca Instituto AOCP</span>
+      <h1>Concurso TAE do IFPA</h1>
+      <p>Foco: 402 · Analista de Tecnologia da Informação e 412 · Técnico em Assuntos Educacionais</p>
+    </div>
+    <div>
+      <div class="count-label" id="countLabel">Faltam para a prova objetiva (20/12/2026, turno da tarde)</div>
+      <div class="count" role="timer" aria-live="off">
+        <div><b id="cd-d">--</b><span>dias</span></div>
+        <div><b id="cd-h">--</b><span>horas</span></div>
+        <div><b id="cd-m">--</b><span>min</span></div>
+        <div><b id="cd-s">--</b><span>seg</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Seções">
+  <div class="wrap" role="tablist">
+    <button role="tab" data-tab="painel" aria-selected="true">Painel</button>
+    <button role="tab" data-tab="edital" aria-selected="false">Edital</button>
+    <button role="tab" data-tab="banca" aria-selected="false">Banca AOCP</button>
+    <button role="tab" data-tab="estudo" aria-selected="false">Materiais</button>
+    <button role="tab" data-tab="simulados" aria-selected="false">Simulados</button>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- PAINEL -->
+<section class="view" id="v-painel">
+  <div class="callout alert">
+    <strong>Inscrições encerradas em 20/10/2026 às 16h</strong>
+    <p>O pagamento da GRU também vencia em 20/10. Se você ainda não pagou, entre na área do candidato em institutoaocp.org.br hoje mesmo e confira a situação. A lista de inscrições deferidas sai em 27/10, com recurso em 28 e 29/10.</p>
+  </div>
+
+  <div class="grid g3">
+    <div class="card">
+      <span class="eyebrow">Próxima data do cronograma</span>
+      <div class="big" id="nextDate">—</div>
+      <p id="nextEvent" class="lede">—</p>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Ritmo sugerido até a prova</span>
+      <div class="big num" id="pace">—</div>
+      <p class="lede">questões por dia para chegar a 2.000 resolvidas antes de 20/12.</p>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Seu melhor simulado</span>
+      <div class="big num" id="best">—</div>
+      <p class="lede" id="bestNote">Faça um simulado na aba Simulados. O resultado fica salvo neste navegador.</p>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="topic-head"><h3>402 · Analista de TI</h3><span class="pill info">Nível E · tarde</span></div>
+      <dl class="kv">
+        <dt>Vagas</dt><dd>2 (1 AC · 1 PPP)</dd>
+        <dt>Vencimento</dt><dd class="num">R$ 5.215,39</dd>
+        <dt>+ Auxílio-alimentação</dt><dd class="num">R$ 1.192,00</dd>
+        <dt>Taxa</dt><dd class="num">R$ 120,00</dd>
+        <dt>Prova</dt><dd>70 questões + títulos (até 5 pts)</dd>
+        <dt>Requisito</dt><dd>Graduação em Ciência da Computação, Sistemas de Informação, Engenharia da Computação ou tecnólogo da área de computação</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <div class="topic-head"><h3>412 · Téc. em Assuntos Educacionais</h3><span class="pill info">Nível E · tarde</span></div>
+      <dl class="kv">
+        <dt>Vagas</dt><dd>10 (6 AC · 1 PcD · 2 PPP · 1 PI)</dd>
+        <dt>Vencimento</dt><dd class="num">R$ 5.215,39</dd>
+        <dt>+ Auxílio-alimentação</dt><dd class="num">R$ 1.192,00</dd>
+        <dt>Taxa</dt><dd class="num">R$ 120,00</dd>
+        <dt>Prova</dt><dd>70 questões + títulos (até 5 pts)</dd>
+        <dt>Requisito</dt><dd>Graduação em Pedagogia ou Licenciatura</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="callout alert">
+    <strong>402 e 412 são no mesmo turno: só uma inscrição vale</strong>
+    <p>Os dois cargos são de nível E e a prova deles é aplicada à tarde. Pelo item 4.1.3, quando o mesmo candidato se inscreve em dois cargos do mesmo turno, vale só a inscrição feita por último (pela data e hora do cadastro, não do pagamento). As outras são canceladas sem devolução da taxa. Confira na área do candidato qual ficou valendo. O painel mantém os dois cargos para você estudar o que for o seu.</p>
+  </div>
+
+  <div class="card">
+    <h3>O que decide a aprovação (item 10.4)</h3>
+    <ul class="tight">
+      <li>No mínimo <b>50%</b> de acertos no bloco de Conhecimentos Gerais (40 questões).</li>
+      <li>No mínimo <b>50%</b> no bloco de Conhecimentos Específicos (30 questões, valendo 2 pontos cada).</li>
+      <li>Pelo menos <b>1 acerto em cada disciplina</b>. Zerar Raciocínio Lógico (só 5 questões no 402) elimina.</li>
+      <li>Específicos valem <b>60 dos 100 pontos</b>. É aí que se ganha a classificação.</li>
+      <li>Os dois cargos têm prova de títulos, mas só para quem ficar no corte: no 402, até o 20º da ampla concorrência (17º nas cotas PPP); no 412, até o 100º. Só conta o maior título; não soma.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- EDITAL -->
+<section class="view" id="v-edital" hidden>
+  <div>
+    <span class="eyebrow">Resumo do Edital nº 5-IFPA, DOU de 21/09/2026</span>
+    <h2>Dados principais</h2>
+  </div>
+  <div class="grid g3">
+    <div class="card"><span class="eyebrow">Órgão</span><p><b>Instituto Federal do Pará (IFPA)</b>. Lotação em qualquer campus, conforme necessidade.</p></div>
+    <div class="card"><span class="eyebrow">Organizadora</span><p><b>Instituto AOCP</b> (Maringá/PR). Tudo é publicado em institutoaocp.org.br.</p></div>
+    <div class="card"><span class="eyebrow">Local da prova</span><p><b>Belém/PA</b>, podendo usar municípios da região metropolitana se faltar espaço.</p></div>
+    <div class="card"><span class="eyebrow">Duração</span><p><b>4 horas</b>, incluindo a folha de respostas. Saída só após 60 min. Caderno só pode ser levado por quem ficar até o fim.</p></div>
+    <div class="card"><span class="eyebrow">Validade</span><p><b>2 anos</b>, prorrogável por mais 2. Total de 65 vagas imediatas.</p></div>
+    <div class="card"><span class="eyebrow">Chegada</span><p><b>45 min antes</b> do fechamento do portão, com caneta transparente azul ou preta, documento com foto e cartão de informação.</p></div>
+  </div>
+
+  <h3>Estrutura da prova por cargo</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Disciplina</th><th>402 · Analista TI (questões)</th><th>412 · TAE (questões)</th><th>Peso</th></tr></thead>
+    <tbody>
+      <tr><td>Língua Portuguesa</td><td class="n">15</td><td class="n">10</td><td class="n">1</td></tr>
+      <tr><td>Legislação e Ética do Serviço Público</td><td class="n">10</td><td class="n">10</td><td class="n">1</td></tr>
+      <tr><td>Noções de Gestão Pública</td><td class="n">10</td><td class="n">10</td><td class="n">1</td></tr>
+      <tr><td>Raciocínio Lógico</td><td class="n">5</td><td class="n">—</td><td class="n">1</td></tr>
+      <tr><td>Conhecimentos de Informática</td><td class="n">—</td><td class="n">10</td><td class="n">1</td></tr>
+      <tr class="hl"><td><b>Conhecimentos Específicos</b></td><td class="n">30</td><td class="n">30</td><td class="n">2</td></tr>
+      <tr><td><b>Total</b></td><td class="n">70 · 100 pts + 5 títulos</td><td class="n">70 · 100 pts + 5 títulos</td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Cronograma (Anexo I)</h3>
+  <div class="tbl"><table id="crono">
+    <thead><tr><th>Data</th><th>Evento</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="lede" style="font-size:.88rem">O cronograma publicado traz o recurso da verificação PPIQ como "25/03 a 26/03/27", depois da divulgação definitiva em 03/03. Parece erro de digitação (provavelmente 25 e 26/02). Acompanhe as retificações.</p>
+
+  <h3>Remuneração e Incentivo à Qualificação</h3>
+  <div class="grid g2">
+    <div class="tbl"><table>
+      <thead><tr><th>Escolaridade além da exigida</th><th>IQ</th></tr></thead>
+      <tbody>
+        <tr><td>Ensino médio completo</td><td class="n">15%</td></tr>
+        <tr><td>Médio profissionalizante / técnico</td><td class="n">20%</td></tr>
+        <tr><td>Graduação</td><td class="n">25%</td></tr>
+        <tr><td>Especialização</td><td class="n">30%</td></tr>
+        <tr><td>Mestrado</td><td class="n">52%</td></tr>
+        <tr><td>Doutorado</td><td class="n">75%</td></tr>
+      </tbody>
+    </table></div>
+    <div class="card">
+      <h3>Simule seu salário inicial</h3>
+      <label for="salCargo" class="eyebrow">Cargo</label>
+      <select id="salCargo"><option value="5215.39">402 · Analista de TI (E)</option><option value="5215.39">412 · TAE (E)</option></select>
+      <label for="salIq" class="eyebrow">Sua escolaridade a mais</label>
+      <select id="salIq"><option value="0">Nenhuma</option><option value="0.15">Médio completo (15%)</option><option value="0.20">Técnico (20%)</option><option value="0.25">Graduação (25%)</option><option value="0.30">Especialização (30%)</option><option value="0.52">Mestrado (52%)</option><option value="0.75">Doutorado (75%)</option></select>
+      <div class="big num" id="salOut">—</div>
+      <p class="lede" style="font-size:.88rem">Vencimento + IQ + auxílio-alimentação, valor bruto. Nos dois cargos a graduação já é o requisito, então o IQ começa na especialização.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BANCA -->
+<section class="view" id="v-banca" hidden>
+  <div>
+    <span class="eyebrow">Instituto AOCP · Maringá/PR</span>
+    <h2>Como a banca cobra</h2>
+    <p class="lede" style="margin-top:6px">O que segue junta o perfil da AOCP descrito por cursinhos com a distribuição de pontos deste edital. As prioridades são uma estimativa minha a partir desses dois pontos, não uma estatística de provas.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Traços da AOCP</h3>
+      <ul class="tight">
+        <li>Cinco alternativas (A a E), uma correta. Muito "assinale a correta / incorreta / EXCETO".</li>
+        <li>Direito e legislação quase sempre na <b>letra da lei</b>. Troca de prazo, de número ou de palavra é a pegadinha clássica.</li>
+        <li>Português equilibra gramática e interpretação. Mais frequentes: concordância, regência, crase, colocação pronominal, pontuação e reescrita mantendo o sentido.</li>
+        <li>Informática prática: Windows, pacote Office (atalhos em português!), navegadores, segurança.</li>
+        <li>Enunciados curtos e diretos. A dificuldade vem da <b>nota de corte alta</b>, não de questões rebuscadas.</li>
+        <li>Costuma seguir o edital de perto e não mistura matérias na mesma questão.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Onde estão os pontos</h3>
+      <div class="seg" role="group" aria-label="Cargo"><button data-peso="402" aria-pressed="true">402 · Analista TI</button><button data-peso="412" aria-pressed="false">412 · TAE</button></div>
+      <div class="bars" id="pesoBars"></div>
+      <p class="lede" style="font-size:.88rem">Pontos por disciplina, de um total de 100. Específicos valem mais que todo o bloco geral somado.</p>
+    </div>
+  </div>
+
+  <h3>Prioridades por disciplina</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Disciplina</th><th>Prioridade</th><th>O que estudar primeiro</th></tr></thead>
+    <tbody>
+      <tr><td>Específicos Analista TI (402)</td><td><span class="pill alert">Máxima</span></td><td>Engenharia de software (processos, UML, padrões, ágil, requisitos, testes), bancos de dados (SQL, transações, BI), infraestrutura (Linux, Windows Server/AD, contêineres, nuvem, storage), segurança e DevSecOps</td></tr>
+      <tr><td>Específicos TAE (412)</td><td><span class="pill alert">Máxima</span></td><td>LDB (arts. 1º a 4º, 21 a 36-D, 39 a 42), educação profissional (Lei 11.892, Decreto 5.154, DCNs EPT), avaliação da aprendizagem, PPP, tendências pedagógicas, ERER e inclusão</td></tr>
+      <tr><td>Legislação e Ética</td><td><span class="pill warn">Alta</span></td><td>Lei 8.112 (provimento, posse, exercício, vacância, deveres e penalidades), Decreto 1.171, Lei 11.091 (PCCTAE), Lei 11.892, LAI e LGPD</td></tr>
+      <tr><td>Língua Portuguesa</td><td><span class="pill warn">Alta</span></td><td>Interpretação, concordância, regência, crase, pontuação, colocação pronominal, funções do "que" e do "se"</td></tr>
+      <tr><td>Gestão Pública</td><td><span class="pill info">Média</span></td><td>Princípios do art. 37, atos administrativos, poderes, Lei 14.133, planejamento estratégico e SWOT</td></tr>
+      <tr><td>Informática (412)</td><td><span class="pill info">Média</span></td><td>Atalhos do Word e Excel em português, Windows 11, segurança (phishing, ransomware), conceitos de IA, Fala.BR e SouGov</td></tr>
+      <tr><td>Raciocínio Lógico (402)</td><td><span class="pill info">Média</span></td><td>Só 5 questões, mas zerar elimina. Porcentagem, regra de três, conjuntos e sequências</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout warn">
+    <strong>Atenção a temas novos no edital</strong>
+    <p>O conteúdo do 402 traz mensageria (RabbitMQ, webhooks), Kubernetes e Rancher, Ansible, DevSecOps e aprendizado de máquina. O de informática geral traz sistemas do governo federal (SIPAC, SIAFI, SouGov, Fala.BR) e fundamentos de IA. Banca costuma incluir pelo menos uma questão de assunto que aparece pela primeira vez no edital.</p>
+  </div>
+
+  <div class="card">
+    <h3>Questões reais da banca</h3>
+    <p class="lede">Os simulados deste painel são inéditos, escritos no formato da AOCP. Para treinar com provas reais, use os filtros por banca e cargo nestes sites:</p>
+    <div class="links">
+      <a href="https://www.qconcursos.com/questoes-de-concursos/bancas/instituto-aocp" target="_blank" rel="noopener"><span class="k">questões</span>Qconcursos · Instituto AOCP</a>
+      <a href="https://www.tecconcursos.com.br/questoes/filtrar" target="_blank" rel="noopener"><span class="k">questões</span>TEC Concursos</a>
+      <a href="https://www.institutoaocp.org.br" target="_blank" rel="noopener"><span class="k">provas</span>Site do Instituto AOCP</a>
+      <a href="https://blog.grancursosonline.com.br/?p=79608093" target="_blank" rel="noopener"><span class="k">material</span>Radar AOCP (Gran)</a>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIAIS -->
+<section class="view" id="v-estudo" hidden>
+  <div>
+    <span class="eyebrow">Vídeos abrem a busca no YouTube já filtrada pelo tema · textos levam à fonte oficial</span>
+    <h2>Materiais de estudo</h2>
+  </div>
+  <div class="seg" role="group" aria-label="Área"><button data-area="ti" aria-pressed="true">Analista de TI</button><button data-area="tae" aria-pressed="false">Assuntos Educacionais</button><button data-area="geral" aria-pressed="false">Comuns aos dois</button></div>
+  <div class="card" id="matList"></div>
+</section>
+
+<!-- SIMULADOS -->
+<section class="view" id="v-simulados" hidden>
+  <div>
+    <span class="eyebrow">Questões inéditas no formato AOCP · 5 alternativas · gabarito comentado</span>
+    <h2>Simulados</h2>
+    <p class="lede" style="margin-top:6px">Na prova real você tem cerca de 3 minutos e 25 segundos por questão. O cronômetro mostra se você está dentro desse ritmo.</p>
+  </div>
+  <div class="card" id="simStart">
+    <label for="simSel" class="eyebrow">Escolha o simulado</label>
+    <select id="simSel"></select>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="simGo">Começar</button><label style="display:flex;gap:6px;align-items:center;font-size:.92rem"><input type="checkbox" id="simShuffle" checked> Embaralhar questões</label></div>
+    <div><span class="eyebrow">Histórico neste navegador</span><ul class="tight hist" id="hist" style="list-style:none;padding:0;margin-top:6px"></ul></div>
+  </div>
+  <div id="simRun" hidden style="display:grid;gap:16px">
+    <div class="simbar">
+      <div><b id="simTitle">—</b> <span class="pill" id="simProg">0/0</span></div>
+      <div class="num" id="simTimer">00:00</div>
+      <div style="display:flex;gap:8px"><button class="btn ghost" id="simQuit">Sair</button><button class="btn" id="simEnd">Corrigir</button></div>
+    </div>
+    <div id="simResult" hidden></div>
+    <div id="simQs" style="display:grid;gap:14px"></div>
+  </div>
+</section>
+
+<footer>Dados retirados do Edital nº 5-IFPA (DOU nº 178, 21/09/2026). Confira sempre as retificações em institutoaocp.org.br. Horário da prova ainda não divulgado (sai em 08/12); os dois cargos de nível E fazem prova à tarde e a contagem usa 14h de Belém como estimativa.</footer>
+</div>
+</main>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- abas ---------- */
+function showTab(t){$$('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));$$('section.view').forEach(s=>s.hidden=s.id!=='v-'+t);store.set('ifpa.tab',t)}
+$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.tab);window.scrollTo({top:0})}));
+const h=(location.hash||'').slice(1);showTab(['painel','edital','banca','estudo','simulados'].includes(h)?h:store.get('ifpa.tab','painel'));
+
+/* ---------- contagem ---------- */
+const PROVA=new Date('2026-12-20T14:00:00-03:00');
+function tick(){let ms=PROVA-new Date();if(ms<0)ms=0;const d=Math.floor(ms/864e5),hh=Math.floor(ms/36e5)%24,m=Math.floor(ms/6e4)%60,s=Math.floor(ms/1e3)%60;
+$('#cd-d').textContent=d;$('#cd-h').textContent=String(hh).padStart(2,'0');$('#cd-m').textContent=String(m).padStart(2,'0');$('#cd-s').textContent=String(s).padStart(2,'0');
+$('#pace').textContent=d>0?Math.ceil(2000/d):'—'}
+tick();setInterval(tick,1000);
+
+/* ---------- cronograma ---------- */
+const CRONO=[
+['2026-09-21','2026-09-21','Publicação do edital'],
+['2026-09-21','2026-09-22','Impugnação do edital'],
+['2026-09-21','2026-09-23','Pedido de isenção da taxa (até 16h de 23/09)'],
+['2026-09-30','2026-09-30','Resultado das isenções'],
+['2026-10-02','2026-10-02','Respostas às impugnações'],
+['2026-10-01','2026-10-02','Recurso contra isenção indeferida'],
+['2026-10-09','2026-10-09','Isenções após recurso'],
+['2026-09-21','2026-10-20','Inscrições (até 16h) e pagamento da GRU'],
+['2026-10-27','2026-10-27','Inscrições deferidas'],
+['2026-10-28','2026-10-29','Recurso contra inscrição indeferida'],
+['2026-11-05','2026-11-05','Inscrições deferidas após recurso'],
+['2026-12-08','2026-12-08','Edital de horário e local da prova'],
+['2026-12-14','2026-12-14','Cartão de Informação do Candidato'],
+['2026-12-20','2026-12-20','PROVA OBJETIVA'],
+['2026-12-21','2026-12-21','Gabarito preliminar e cadernos'],
+['2026-12-23','2026-12-24','Recurso contra o gabarito'],
+['2027-01-27','2027-01-27','Gabarito definitivo e resultado preliminar'],
+['2027-01-28','2027-01-29','Recurso contra o resultado preliminar'],
+['2027-02-11','2027-02-11','Resultado definitivo da objetiva · convocações PcD e PPP'],
+['2027-02-19','2027-02-21','Avaliação biopsicossocial e heteroidentificação'],
+['2027-03-03','2027-03-03','Convocação para títulos (só nível E)'],
+['2027-03-04','2027-03-09','Envio dos títulos'],
+['2027-03-24','2027-03-24','Resultado preliminar dos títulos'],
+['2027-04-06','2027-04-06','Resultado preliminar final'],
+['2027-04-07','2027-04-08','Recurso contra o resultado final'],
+['2027-04-16','2027-04-16','Resultado final após recurso']
+].sort((a,b)=>a[0].localeCompare(b[0])||a[1].localeCompare(b[1]));
+const fmt=s=>{const[y,m,d]=s.split('-');return d+'/'+m+'/'+y.slice(2)};
+const today=new Date();const tStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+let nextFound=null;const tb=$('#crono tbody');
+CRONO.forEach(([a,b,ev])=>{const tr=document.createElement('tr');const past=b<tStr;if(!past&&!nextFound&&a>tStr){nextFound=[a,b,ev];tr.className='next'}else if(past)tr.className='past';if(ev==='PROVA OBJETIVA')tr.className+=' hl';
+tr.innerHTML='<td class="n" style="text-align:left">'+(a===b?fmt(a):fmt(a)+' a '+fmt(b))+'</td><td>'+ev+'</td>';tb.appendChild(tr)});
+if(nextFound){$('#nextDate').textContent=fmt(nextFound[0]);$('#nextEvent').textContent=nextFound[2]}
+
+/* ---------- salário ---------- */
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+function sal(){const b=+$('#salCargo').value,iq=+$('#salIq').value;$('#salOut').textContent=brl(b*(1+iq)+1192)}
+$('#salCargo').addEventListener('change',sal);$('#salIq').addEventListener('change',sal);sal();
+
+/* ---------- pesos ---------- */
+const PESOS={'402':[['Português',15],['Legislação',10],['Gestão Pública',10],['Rac. Lógico',5],['Específicos',60]],'412':[['Português',10],['Legislação',10],['Gestão Pública',10],['Informática',10],['Específicos',60]]};
+function drawPeso(c){$('#pesoBars').innerHTML=PESOS[c].map(([n,v])=>'<div class="bar"><span>'+n+'</span><div class="track"><div class="fill'+(n==='Específicos'?' spec':'')+'" style="width:'+v+'%"></div></div><b>'+v+'</b></div>').join('');$$('[data-peso]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.peso===c))}
+$$('[data-peso]').forEach(b=>b.addEventListener('click',()=>drawPeso(b.dataset.peso)));drawPeso('402');
+
+/* ---------- materiais ---------- */
+const yt=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+const P='https://www.planalto.gov.br/ccivil_03/';
+const MAT={
+ti:[
+ ['Engenharia de software','alta','Processos de desenvolvimento, CMMI-DEV e MPS.BR, UML 2.5, engenharia de requisitos, TDD, refatoração e tipos de teste',[['vídeo','UML: diagramas principais',yt('UML 2.5 diagramas de classes sequência casos de uso aula')],['vídeo','CMMI e MPS.BR',yt('CMMI-DEV MPS.BR níveis de maturidade concurso')],['vídeo','Engenharia de requisitos',yt('engenharia de requisitos funcionais não funcionais elicitação')],['vídeo','TDD na prática',yt('TDD test driven development red green refactor')]]],
+ ['Arquitetura e padrões de projeto','alta','Design Patterns (GoF), arquitetura em camadas, cliente-servidor, microsserviços, mensageria (RabbitMQ, eventos, webhooks)',[['vídeo','Padrões de projeto GoF',yt('design patterns GoF singleton factory observer explicação')],['vídeo','Microsserviços x monolito',yt('microsserviços vs monolito arquitetura')],['texto','Tutoriais do RabbitMQ','https://www.rabbitmq.com/tutorials'],['vídeo','Webhook e mensageria',yt('o que é webhook message broker fila')]]],
+ ['Métodos ágeis e DevOps','alta','Scrum, XP, DevOps, DevSecOps, Git, CI/CD',[['texto','Guia do Scrum','https://scrumguides.org/'],['texto','Livro Pro Git (pt-br)','https://git-scm.com/book/pt-br/v2'],['vídeo','DevOps e DevSecOps',yt('DevOps DevSecOps CI/CD explicação')],['vídeo','Extreme Programming',yt('XP extreme programming práticas valores')]]],
+ ['Banco de dados e BI','alta','SQL, transações e propriedades ACID, controle de concorrência e recuperação, MySQL e PostgreSQL, data warehouse, OLAP, ETL, data mining',[['texto','Tutorial do PostgreSQL','https://www.postgresql.org/docs/current/tutorial.html'],['vídeo','Transações e ACID',yt('transações banco de dados ACID controle de concorrência')],['vídeo','Data warehouse, OLAP e ETL',yt('data warehouse OLAP ETL modelo estrela concurso')],['vídeo','SQL avançado',yt('SQL JOIN GROUP BY HAVING subconsultas exercícios')]]],
+ ['Infraestrutura e sistemas operacionais','alta','Gerência de processos e memória, Linux, Windows Server, Active Directory, Apache e NGINX, cluster e balanceamento, Ansible',[['vídeo','Sistemas operacionais',yt('sistemas operacionais gerência de processos memória escalonamento')],['vídeo','Active Directory',yt('Active Directory floresta domínio árvore unidade organizacional')],['vídeo','NGINX proxy reverso',yt('NGINX proxy reverso balanceamento de carga')],['texto','Introdução ao Ansible','https://docs.ansible.com/ansible/latest/getting_started/index.html']]],
+ ['Contêineres, nuvem e storage','alta','Docker, Kubernetes, Rancher, IaaS/PaaS/SaaS, SAN, NAS, DAS, SDS, tipos de backup, VMware',[['texto','Docker: primeiros passos','https://docs.docker.com/get-started/'],['texto','Conceitos do Kubernetes','https://kubernetes.io/pt-br/docs/concepts/'],['vídeo','SAN, NAS e DAS',yt('SAN NAS DAS diferença armazenamento')],['vídeo','Tipos de backup',yt('backup completo incremental diferencial')]]],
+ ['Segurança da informação','alta','Políticas e normas, mecanismos de segurança, gestão de riscos, ciclo de desenvolvimento seguro, análise estática e dinâmica (SAST/DAST)',[['texto','OWASP Top 10','https://owasp.org/www-project-top-ten/'],['texto','Cartilha de Segurança CERT.br','https://cartilha.cert.br/'],['vídeo','SAST e DAST',yt('SAST DAST análise estática dinâmica de código')]]],
+ ['Programação e IA','média','PHP, Java e Python, XML/XSD e JSON, desenvolvimento web e mobile, machine learning (supervisionado e não supervisionado), modelos de linguagem',[['texto','Tutorial oficial de Python (pt-br)','https://docs.python.org/pt-br/3/tutorial/'],['vídeo','Aprendizado supervisionado x não supervisionado',yt('aprendizado supervisionado não supervisionado machine learning')],['vídeo','XML Schema e JSON',yt('XML XSD JSON diferenças')]]],
+ ['Hardware','média','Placa-mãe, processador, memórias e periféricos',[['vídeo','Hardware para concursos',yt('hardware para concursos memória RAM ROM cache processador')]]]
+],
+tae:[
+ ['LDB (Lei 9.394/1996)','alta','Princípios (art. 3º), dever do Estado (art. 4º), organização (arts. 8º a 20), educação básica (21 a 36-D), educação profissional (39 a 42), EJA, educação especial',[['texto','Texto atualizado da LDB',P+'leis/l9394.htm'],['vídeo','LDB esquematizada',yt('LDB esquematizada concurso técnico em assuntos educacionais')],['vídeo','Educação profissional na LDB',yt('LDB educação profissional técnica de nível médio art 36-B')]]],
+ ['Educação profissional e tecnológica','alta','Lei 11.892 (Institutos Federais), Decreto 5.154/2004, DCNs gerais da EPT (Resolução CNE/CP 1/2021), Catálogo Nacional de Cursos Técnicos, PROEJA',[['texto','Lei 11.892/2008',P+'_ato2007-2010/2008/lei/l11892.htm'],['texto','Decreto 5.154/2004',P+'_ato2004-2006/2004/decreto/d5154.htm'],['texto','Decreto 5.840/2006 (PROEJA)',P+'_ato2004-2006/2006/decreto/d5840.htm'],['vídeo','Resolução CNE/CP 1/2021',yt('Resolução CNE/CP 1/2021 diretrizes educação profissional')]]],
+ ['Organização do trabalho pedagógico','alta','Planejamento, PPP, interdisciplinaridade, metodologia, formação docente, acompanhamento pedagógico',[['vídeo','Projeto político-pedagógico',yt('projeto político pedagógico Veiga concurso')],['vídeo','Planejamento de ensino',yt('planejamento de ensino Libâneo didática concurso')],['vídeo','Multi, inter e transdisciplinaridade',yt('multidisciplinaridade interdisciplinaridade transdisciplinaridade diferença')]]],
+ ['Avaliação','alta','Diagnóstica, formativa e somativa; avaliação institucional e em larga escala; indicadores educacionais',[['vídeo','Tipos de avaliação',yt('avaliação diagnóstica formativa somativa Luckesi')],['vídeo','Avaliação em larga escala',yt('avaliação em larga escala SAEB IDEB concurso')]]],
+ ['Tendências pedagógicas e fundamentos','média','Pedagogias liberais e progressistas, Paulo Freire, Saviani, Vygotsky, Piaget, história da educação brasileira',[['vídeo','Tendências pedagógicas (Libâneo)',yt('tendências pedagógicas liberais progressistas Libâneo')],['vídeo','Fundamentos histórico-filosóficos',yt('história da educação brasileira concurso pedagogia')]]],
+ ['Diversidade e inclusão','média','ERER (Lei 10.639 e 11.645), educação indígena e quilombola, direitos humanos, educação ambiental, acessibilidade',[['texto','Lei 10.098/2000',P+'leis/l10098.htm'],['texto','Lei 10.048/2000',P+'leis/l10048.htm'],['texto','Decreto 5.296/2004',P+'_ato2004-2006/2004/decreto/d5296.htm'],['vídeo','Relações étnico-raciais',yt('diretrizes curriculares educação das relações étnico-raciais concurso')]]],
+ ['PNE e políticas educacionais','média','Lei 13.005/2014, metas, PPI do IFPA',[['texto','Lei 13.005/2014 (PNE)',P+'_ato2011-2014/2014/lei/l13005.htm'],['vídeo','PNE para concursos',yt('PNE metas concurso educação')]]]
+],
+geral:[
+ ['Lei 8.112/1990','alta','Provimento, posse (30 dias), exercício (15 dias), estágio probatório, vacância, direitos, deveres, proibições, penalidades, PAD',[['texto','Lei 8.112 consolidada',P+'leis/l8112cons.htm'],['vídeo','Lei 8.112 completa',yt('Lei 8112 completa esquematizada concurso')]]],
+ ['Ética e carreira','alta','Decreto 1.171/1994, Decreto 6.029/2007, Lei 11.091/2005 (PCCTAE)',[['texto','Decreto 1.171/1994',P+'decreto/d1171.htm'],['texto','Lei 11.091/2005',P+'_ato2004-2006/2005/lei/l11091.htm'],['vídeo','PCCTAE explicado',yt('Lei 11.091 PCCTAE concurso técnico administrativo')]]],
+ ['Leis administrativas','alta','LAI, LGPD, Processo Administrativo, Improbidade, Licitações',[['texto','Lei 12.527 (LAI)',P+'_ato2011-2014/2011/lei/l12527.htm'],['texto','Lei 13.709 (LGPD)',P+'_ato2015-2018/2018/lei/l13709.htm'],['texto','Lei 9.784/1999',P+'leis/l9784.htm'],['texto','Lei 8.429/1992',P+'leis/l8429.htm'],['texto','Lei 14.133/2021',P+'_ato2019-2022/2021/lei/l14133.htm']]],
+ ['Constituição Federal','média','Arts. 37 a 41 (administração pública) e 205 a 219-B (educação, ciência e tecnologia)',[['texto','Constituição Federal',P+'constituicao/constituicao.htm'],['vídeo','Art. 37 da CF',yt('artigo 37 constituição federal concurso princípios')]]],
+ ['Língua Portuguesa (AOCP)','alta','Interpretação, concordância, regência, crase, pontuação, colocação pronominal, redação oficial',[['vídeo','Português AOCP',yt('português banca AOCP questões comentadas')],['vídeo','Crase',yt('crase regras concurso')],['texto','Manual de Redação da Presidência','https://www4.planalto.gov.br/centrodeestudos/assuntos/manual-de-redacao-da-presidencia-da-republica']]],
+ ['Gestão Pública','média','Princípios, atos e poderes administrativos, planejamento estratégico, SWOT, governança, atendimento ao cidadão',[['vídeo','Atos administrativos',yt('atos administrativos requisitos atributos concurso')],['vídeo','Planejamento estratégico e SWOT',yt('planejamento estratégico análise SWOT administração pública')]]],
+ ['Informática (412) e Rac. Lógico (402)','média','Windows 11, Office 365 em português, Google Workspace, segurança, IA · porcentagem, regra de três, conjuntos, sequências',[['vídeo','Atalhos do Word em português',yt('atalhos word português concurso Ctrl+N Ctrl+B')],['vídeo','Excel para concursos',yt('excel para concursos funções SOMA MÉDIA SE PROCV')],['vídeo','Raciocínio lógico AOCP',yt('raciocínio lógico banca AOCP questões')]]]
+]};
+const prioPill={alta:'<span class="pill alert">alta</span>',média:'<span class="pill info">média</span>',nova:'<span class="pill warn">tema novo</span>'};
+function drawMat(a){$('#matList').innerHTML=MAT[a].map(([t,p,d,ls])=>'<div class="topic"><div class="topic-head"><h3>'+t+'</h3>'+prioPill[p]+'</div><p class="lede">'+d+'</p><div class="links">'+ls.map(([k,n,u])=>'<a href="'+u+'" target="_blank" rel="noopener"><span class="k">'+k+'</span>'+n+'</a>').join('')+'</div></div>').join('');
+$$('[data-area]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.area===a));store.set('ifpa.area',a)}
+$$('[data-area]').forEach(b=>b.addEventListener('click',()=>drawMat(b.dataset.area)));drawMat(store.get('ifpa.area','ti'));
+
+/* ---------- banco de questões ---------- */
+// [disciplina, enunciado, [A..E], índice correto, comentário]
+const Q={
+port:[
+['Português','Assinale a alternativa em que o acento grave indicativo de crase está empregado corretamente.',['O servidor começou à estudar para o concurso.','O candidato referiu-se à norma publicada no edital.','O ofício foi enviado à todos os campi.','Ela foi à pé até o local de prova.','O resultado foi entregue à cada candidato.'],1,'"Referir-se" exige a preposição "a", e "norma" pede o artigo "a": a + a = à. Não há crase antes de verbo, de pronome indefinido (todos, cada) nem de palavra masculina (pé).'],
+['Português','Assinale a alternativa que está de acordo com a norma-padrão quanto à concordância verbal.',['Fazem dois anos que o IFPA não realiza concurso.','Houveram muitas inscrições para o cargo.','Devem haver vagas remanescentes.','Existem candidatos aguardando o resultado.','Aluga-se salas próximas ao campus.'],3,'"Existir" é pessoal e concorda com o sujeito "candidatos". "Fazer" (tempo) e "haver" (existir) são impessoais e ficam no singular, inclusive o auxiliar ("deve haver"). Em "aluga-se salas", o sujeito é "salas": o certo é "alugam-se".'],
+['Português','Quanto à regência, assinale a alternativa correta.',['Prefiro estudar do que trabalhar.','O candidato assistiu ao vídeo da aula.','Obedeça o edital.','Ele aspira o cargo de analista.','Esqueci do prazo de recurso.'],1,'"Assistir" no sentido de ver pede a preposição "a". "Preferir" rege "a" (prefiro isto àquilo), "obedecer" pede "a", "aspirar" no sentido de desejar pede "a" e "esquecer" sem pronome não leva "de".'],
+['Português','Assinale a alternativa em que a colocação pronominal está de acordo com a norma-padrão.',['Me informaram o local da prova.','Não informaram-me o local da prova.','Ninguém me informou o local da prova.','Quem informou-lhe o local da prova?','Informarei-te o local amanhã.'],2,'Pronome indefinido (ninguém), palavra negativa e pronome interrogativo atraem a próclise. A norma-padrão não aceita pronome oblíquo iniciando frase. No futuro do presente usa-se mesóclise: informar-te-ei.'],
+['Português','Assinale a alternativa corretamente pontuada.',['Os candidatos, devem chegar com antecedência.','O edital, que foi publicado em setembro, prevê 65 vagas.','Durante a prova é proibido, usar o celular.','O IFPA publicou, o edital no Diário Oficial.','A prova será em Belém e, os portões fecharão no horário.'],1,'A oração adjetiva explicativa "que foi publicado em setembro" fica entre vírgulas. Nas demais há vírgula separando sujeito de verbo, verbo de complemento ou partes que não devem ser separadas.'],
+['Português','Em "Se o candidato não comparecer, será eliminado", a conjunção "se" introduz oração que expressa ideia de',['causa.','concessão.','condição.','finalidade.','consequência.'],2,'"Se" é conjunção subordinativa condicional: a eliminação depende de o candidato não comparecer.']
+],
+leg:[
+['Legislação','De acordo com a Lei nº 8.112/1990, são formas de provimento de cargo público, EXCETO:',['nomeação.','readaptação.','remoção.','reversão.','recondução.'],2,'O art. 8º lista nomeação, promoção, readaptação, reversão, aproveitamento, reintegração e recondução. Remoção é deslocamento do servidor (art. 36) e não provê cargo.'],
+['Legislação','Segundo a Lei nº 8.112/1990, após a posse o servidor deverá entrar em exercício no prazo de',['5 dias.','10 dias.','15 dias.','30 dias.','45 dias.'],2,'Art. 15, § 1º: 15 dias contados da data da posse. A posse em si ocorre em até 30 dias da publicação do ato de provimento (art. 13, § 1º). O edital repete esses prazos nos itens 19.7.4 e 19.8.1.'],
+['Legislação','Conforme o Decreto nº 1.171/1994 (Código de Ética do Servidor Público Civil do Poder Executivo Federal), a pena aplicável ao servidor pela Comissão de Ética é a de',['advertência.','suspensão.','censura.','demissão.','multa.'],2,'O inciso XXII do Código de Ética define a censura como pena aplicável pela Comissão de Ética, com parecer assinado por todos os integrantes.'],
+['Legislação','Segundo a Lei nº 11.892/2008, os Institutos Federais são',['autarquias de regime especial vinculadas ao Ministério da Ciência e Tecnologia.','instituições de educação superior, básica e profissional, pluricurriculares e multicampi.','fundações de direito privado dedicadas exclusivamente ao ensino técnico.','instituições de ensino superior sem atuação na educação básica.','órgãos da administração direta subordinados às secretarias estaduais de educação.'],1,'Art. 2º: os Institutos Federais são instituições de educação superior, básica e profissional, pluricurriculares e multicampi, especializadas em educação profissional e tecnológica.'],
+['Legislação','Pela Lei nº 11.892/2008, o Instituto Federal deve garantir, em cada exercício, o mínimo de quantos por cento de suas vagas para cursos de licenciatura e programas de formação pedagógica?',['10%','15%','20%','30%','50%'],2,'Art. 8º: mínimo de 50% das vagas para educação profissional técnica de nível médio e 20% para licenciaturas e formação pedagógica.'],
+['Legislação','Segundo a Lei nº 12.527/2011 (LAI), não sendo possível o acesso imediato, o órgão deve responder ao pedido de informação em prazo não superior a',['10 dias, prorrogável por mais 5.','15 dias, sem prorrogação.','20 dias, prorrogável por mais 10.','30 dias, prorrogável por mais 30.','45 dias, sem prorrogação.'],2,'Art. 11, §§ 1º e 2º: até 20 dias, prorrogáveis por mais 10 mediante justificativa expressa.'],
+['Legislação','De acordo com a LGPD (Lei nº 13.709/2018), NÃO é considerado dado pessoal sensível:',['origem racial ou étnica.','dado referente à saúde.','dado biométrico.','filiação a sindicato.','endereço residencial.'],4,'Art. 5º, II: são sensíveis origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato, dados de saúde, vida sexual, genéticos e biométricos. Endereço é dado pessoal comum.'],
+['Legislação','Segundo a Lei nº 9.784/1999, salvo disposição legal específica, é de quantos dias o prazo para interposição de recurso administrativo?',['5 dias.','10 dias.','15 dias.','20 dias.','30 dias.'],1,'Art. 59: 10 dias, contados da ciência ou divulgação oficial da decisão.']
+],
+gest:[
+['Gestão Pública','Os princípios expressos no caput do art. 37 da Constituição Federal são legalidade, impessoalidade, moralidade, publicidade e',['razoabilidade.','eficiência.','economicidade.','motivação.','continuidade.'],1,'LIMPE: Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência. Razoabilidade e motivação aparecem na Lei 9.784/1999; economicidade, no art. 70 da CF.'],
+['Gestão Pública','Na análise SWOT, os fatores do ambiente interno da organização são',['oportunidades e ameaças.','forças e oportunidades.','forças e fraquezas.','fraquezas e ameaças.','oportunidades e fraquezas.'],2,'Forças (strengths) e fraquezas (weaknesses) são internas e controláveis. Oportunidades e ameaças vêm do ambiente externo.'],
+['Gestão Pública','São requisitos (elementos) do ato administrativo:',['competência, finalidade, forma, motivo e objeto.','imperatividade, presunção de legitimidade e autoexecutoriedade.','legalidade, moralidade e eficiência.','discricionariedade, vinculação e conveniência.','tipicidade, imperatividade e forma.'],0,'Os cinco requisitos são competência, finalidade, forma, motivo e objeto. A alternativa B traz atributos, não requisitos.'],
+['Gestão Pública','A aplicação de penalidade a um servidor que descumpriu dever funcional é manifestação do poder',['regulamentar.','de polícia.','disciplinar.','vinculado.','normativo.'],2,'O poder disciplinar permite apurar infrações e aplicar penalidades a servidores e a quem tem vínculo especial com a Administração. O poder de polícia atinge particulares em geral.'],
+['Gestão Pública','Segundo a Lei nº 14.133/2021, NÃO é modalidade de licitação:',['pregão.','concorrência.','tomada de preços.','leilão.','diálogo competitivo.'],2,'Art. 28: pregão, concorrência, concurso, leilão e diálogo competitivo. Tomada de preços e convite existiam na Lei 8.666/1993 e foram extintos.']
+],
+rl:[
+['Raciocínio Lógico','Seis servidores digitalizam 1.200 páginas em 4 horas. Mantido o mesmo ritmo, quantas páginas 9 servidores digitalizam em 6 horas?',['1.800','2.400','2.700','3.000','3.600'],2,'Regra de três composta: 1.200 × (9/6) × (6/4) = 1.200 × 1,5 × 1,5 = 2.700.'],
+['Raciocínio Lógico','Um produto teve aumento de 10% e, em seguida, desconto de 10% sobre o novo valor. Em relação ao preço inicial, o preço final é',['igual.','1% maior.','1% menor.','2% menor.','10% menor.'],2,'1,10 × 0,90 = 0,99. O preço final corresponde a 99% do inicial, ou seja, 1% menor.'],
+['Raciocínio Lógico','Em uma turma de 40 alunos, 25 estudam Python, 20 estudam Java e 8 não estudam nenhuma das duas. Quantos estudam as duas linguagens?',['5','8','10','13','17'],3,'Estudam pelo menos uma: 40 − 8 = 32. Então 25 + 20 − x = 32, logo x = 13.'],
+['Raciocínio Lógico','Qual é o próximo termo da sequência 2, 6, 12, 20, 30, ...?',['36','40','42','44','48'],2,'As diferenças são 4, 6, 8, 10, a próxima é 12: 30 + 12 = 42. Cada termo é n × (n + 1).']
+],
+info:[
+['Informática','No Microsoft Word 365, em português, os atalhos Ctrl+N e Ctrl+B executam, respectivamente,',['novo documento e negrito.','negrito e salvar.','negrito e buscar.','novo documento e salvar.','sublinhado e negrito.'],1,'Na versão em português, Ctrl+N aplica Negrito, Ctrl+I Itálico, Ctrl+S Sublinhado e Ctrl+B Salvar. A AOCP costuma cobrar justamente essa diferença em relação à versão em inglês.'],
+['Informática','No Excel 365, se B1, B2, B3 e B4 contêm 4, 6, 8 e 10, a fórmula =MÉDIA(B1:B4) retorna',['6','7','8','28','4'],1,'(4 + 6 + 8 + 10) ÷ 4 = 28 ÷ 4 = 7.'],
+['Informática','No Windows 11, o atalho tecla Windows + E',['bloqueia a sessão.','abre o Explorador de Arquivos.','mostra a área de trabalho.','abre as Configurações.','abre o Gerenciador de Tarefas.'],1,'Win+E abre o Explorador de Arquivos. Win+L bloqueia, Win+D mostra a área de trabalho, Win+I abre Configurações e Ctrl+Shift+Esc abre o Gerenciador de Tarefas.'],
+['Informática','Mensagem que imita a comunicação de um banco para induzir o usuário a informar senha em um site falso caracteriza',['ransomware.','spyware.','phishing.','worm.','adware.'],2,'Phishing é a fraude que usa mensagens e páginas falsas para obter dados. Ransomware sequestra arquivos e pede resgate; worm se propaga sozinho pela rede.'],
+['Informática','Sobre inteligência artificial, é correto afirmar que',['machine learning e IA são sinônimos.','deep learning é um subconjunto de machine learning, que por sua vez é um subconjunto da IA.','deep learning dispensa dados para treinamento.','machine learning é um subconjunto de deep learning.','toda IA usa redes neurais profundas.'],1,'A relação é de conjuntos aninhados: IA ⊃ aprendizado de máquina ⊃ aprendizado profundo (redes neurais com muitas camadas).'],
+['Informática','A plataforma do governo federal usada para registrar manifestações de ouvidoria e pedidos de acesso à informação é o',['SIAFI.','SIPAC.','Fala.BR.','SCDP.','SIORG.'],2,'Fala.BR integra ouvidoria e LAI. SIAFI é o sistema financeiro, SCDP trata de diárias e passagens e SIORG da estrutura organizacional.']
+],
+ti:[
+['TI · Banco de dados','Em SQL, para filtrar grupos formados por GROUP BY com base no resultado de uma função de agregação, utiliza-se a cláusula',['WHERE.','HAVING.','ORDER BY.','DISTINCT.','LIMIT.'],1,'WHERE filtra linhas antes do agrupamento. HAVING filtra os grupos depois, e por isso aceita funções como COUNT() e SUM().'],
+['TI · Banco de dados','O comando SQL que remove uma tabela inteira, incluindo sua estrutura e seus dados, é',['DELETE FROM tabela;','TRUNCATE TABLE tabela;','DROP TABLE tabela;','ALTER TABLE tabela DROP;','REMOVE TABLE tabela;'],2,'DROP elimina a estrutura. DELETE e TRUNCATE apagam linhas e mantêm a tabela. REMOVE TABLE não existe.'],
+['TI · Banco de dados','Uma tabela está na Primeira Forma Normal (1FN) quando',['não possui chave estrangeira.','todos os atributos são atômicos, sem grupos repetitivos.','não há dependência transitiva.','todos os atributos dependem de parte da chave.','possui apenas uma coluna.'],1,'1FN exige valores atômicos. A 2FN elimina dependências parciais e a 3FN, dependências transitivas.'],
+['TI · Banco de dados','Considere: SELECT a.nome, c.titulo FROM aluno a INNER JOIN curso c ON a.id_curso = c.id; O resultado contém',['todos os alunos, mesmo os sem curso.','todos os cursos, mesmo os sem alunos.','apenas os pares aluno-curso em que a condição de junção é satisfeita.','o produto cartesiano das duas tabelas.','apenas alunos sem curso.'],2,'INNER JOIN devolve só as linhas com correspondência nas duas tabelas. LEFT JOIN manteria todos os alunos; RIGHT JOIN, todos os cursos.'],
+['TI · Banco de dados','A propriedade das transações que garante que todas as operações sejam executadas por completo ou nenhuma delas seja efetivada é a',['consistência.','isolamento.','durabilidade.','atomicidade.','integridade referencial.'],3,'Atomicidade é o "tudo ou nada" do ACID. Consistência mantém as regras do banco, isolamento evita interferência entre transações concorrentes e durabilidade garante que o que foi confirmado não se perde.'],
+['TI · Banco de dados','No modelo dimensional em estrela, usado em data warehouses, a tabela central que armazena as medidas numéricas do negócio e se liga às dimensões é a tabela',['fato.','dimensão.','agregada.','de staging.','de auditoria.'],0,'A tabela fato guarda as métricas (valores, quantidades) e as chaves das dimensões ao redor. As dimensões trazem os atributos descritivos, como tempo, produto e local.'],
+['TI · Engenharia de software','O padrão de projeto que garante que uma classe tenha apenas uma instância e fornece um ponto global de acesso a ela é o',['Factory Method.','Observer.','Singleton.','Adapter.','Decorator.'],2,'Singleton é padrão criacional de instância única. Observer notifica dependentes de mudanças; Adapter compatibiliza interfaces; Decorator acrescenta comportamento dinamicamente.'],
+['TI · Engenharia de software','Na UML 2.5, é exemplo de diagrama estrutural:',['diagrama de sequência.','diagrama de atividades.','diagrama de casos de uso.','diagrama de classes.','diagrama de máquina de estados.'],3,'Classes, objetos, componentes, pacotes e implantação são estruturais. Sequência, atividades, casos de uso e máquina de estados são comportamentais.'],
+['TI · Engenharia de software','O ciclo básico do Test-Driven Development (TDD) é',['codificar, testar e documentar.','escrever um teste que falha, fazer o código passar e refatorar.','refatorar, codificar e testar.','projetar, implementar e homologar.','testar em produção e corrigir.'],1,'O ciclo é vermelho (teste falhando), verde (código mínimo para passar) e refatoração, repetido em pequenos passos.'],
+['TI · Engenharia de software','No modelo MPS.BR para software, o nível de maturidade inicial, o primeiro da escala, é o nível',['A.','C.','E.','G.','1.'],3,'O MPS.BR vai de G (parcialmente gerenciado, o mais baixo) até A (em otimização, o mais alto).'],
+['TI · Engenharia de software','Em orientação a objetos, o princípio de esconder os detalhes internos de um objeto e expor apenas uma interface pública é o',['polimorfismo.','encapsulamento.','herança.','sobrecarga.','acoplamento.'],1,'Encapsulamento protege o estado interno (atributos privados, acesso por métodos). Herança reaproveita estrutura; polimorfismo permite comportamentos diferentes sob a mesma interface.'],
+['TI · Ágil','No Scrum, o papel responsável por maximizar o valor do produto e gerenciar o Product Backlog é o',['Scrum Master.','Product Owner.','Developer.','Stakeholder.','Gerente de Projeto.'],1,'O Product Owner gerencia o backlog. O Scrum Master cuida da eficácia do time e do processo. O Guia do Scrum não prevê gerente de projeto.'],
+['TI · Ferramentas','No Git, o comando que cria uma nova branch chamada "dev" e já muda para ela é',['git branch dev','git checkout -b dev','git merge dev','git commit -b dev','git push dev'],1,'git checkout -b dev (ou git switch -c dev) cria e troca. git branch dev só cria, sem trocar.'],
+['TI · Arquitetura','Uma característica da arquitetura de microsserviços, em comparação com a arquitetura monolítica, é',['a obrigatoriedade de um único banco de dados compartilhado por todos os serviços.','a possibilidade de implantar e escalar cada serviço de forma independente.','a impossibilidade de usar linguagens diferentes entre os serviços.','a ausência de comunicação pela rede entre os componentes.','o acoplamento forte entre os módulos.'],1,'Microsserviços são pequenos, com baixo acoplamento, implantação e escala independentes e, em geral, dados próprios. O custo é a complexidade de comunicação em rede.'],
+['TI · Arquitetura','O componente que recebe mensagens de produtores, armazena-as em filas e as entrega aos consumidores, permitindo comunicação assíncrona e desacoplada, como o RabbitMQ, é chamado de',['load balancer.','message broker.','API gateway.','service mesh.','proxy reverso.'],1,'O message broker intermedeia produtores e consumidores. O RabbitMQ implementa o protocolo AMQP.'],
+['TI · Web','Em uma API REST, o código de status HTTP que indica que um novo recurso foi criado com sucesso é',['200','201','204','301','404'],1,'201 Created. 200 é OK genérico, 204 é sucesso sem conteúdo, 301 é redirecionamento permanente e 404 é recurso não encontrado.'],
+['TI · Programação','Em Python, a principal diferença entre lista e tupla é que',['a lista é imutável e a tupla é mutável.','a tupla é imutável e a lista é mutável.','a tupla só armazena números.','a lista não pode conter elementos repetidos.','não há diferença entre elas.'],1,'Listas, criadas com [ ], podem ser alteradas. Tuplas, criadas com ( ), não podem ser modificadas depois de criadas.'],
+['TI · Programação','O formato leve de troca de dados baseado em pares chave-valor, derivado da sintaxe de objetos JavaScript, é o',['XML.','XSD.','JSON.','YAML Schema.','DTD.'],2,'JSON usa pares chave-valor e arrays. XSD e DTD descrevem a estrutura de documentos XML.'],
+['TI · Contêineres','No Kubernetes, a menor unidade implantável, que pode conter um ou mais contêineres que compartilham rede e armazenamento, é o',['Node.','Pod.','Deployment.','Namespace.','Cluster.'],1,'O Pod é a menor unidade de implantação. Node é a máquina; Deployment gerencia réplicas de Pods; Namespace separa recursos logicamente.'],
+['TI · Contêineres','Sobre Docker, é correto afirmar que',['imagem e contêiner são a mesma coisa.','um contêiner é uma instância em execução criada a partir de uma imagem.','contêineres precisam de um sistema operacional completo próprio, como as máquinas virtuais.','o Dockerfile é o contêiner em execução.','Docker só funciona em Windows.'],1,'A imagem é o modelo somente leitura; o contêiner é a instância executada. Contêineres compartilham o kernel do host, ao contrário das VMs.'],
+['TI · Infraestrutura','A tecnologia de armazenamento que oferece acesso em nível de bloco por meio de uma rede dedicada de alta velocidade, como Fibre Channel ou iSCSI, é a',['NAS.','DAS.','SAN.','SDS.','RAID 0.'],2,'SAN entrega blocos pela rede. NAS entrega arquivos (NFS, SMB). DAS é ligado diretamente ao servidor.'],
+['TI · Infraestrutura','No Microsoft Active Directory, o nível mais alto da estrutura lógica, que pode conter uma ou mais árvores de domínios, é a',['unidade organizacional.','floresta.','site.','GPO.','partição.'],1,'A floresta é o limite mais alto do AD e contém árvores, que contêm domínios. Unidades organizacionais organizam objetos dentro de um domínio; sites refletem a topologia física.'],
+['TI · Infraestrutura','Um servidor NGINX que recebe as requisições dos clientes e as encaminha para servidores de aplicação internos, podendo distribuir a carga entre eles, está atuando como',['proxy reverso.','proxy transparente de saída.','servidor DHCP.','servidor DNS recursivo.','firewall de host.'],0,'No proxy reverso, o servidor fica na frente das aplicações e recebe o tráfego de fora. É um uso típico de NGINX e Apache para balanceamento de carga.'],
+['TI · Infraestrutura','Sobre o Ansible, é correto afirmar que',['exige a instalação de um agente em cada servidor gerenciado.','usa playbooks em YAML e, em geral, se conecta aos hosts Linux por SSH, sem agente.','é um sistema de controle de versão.','é um hipervisor do tipo 1.','só gerencia máquinas Windows.'],1,'O Ansible é agentless: o controlador acessa os hosts por SSH (ou WinRM no Windows) e executa as tarefas descritas em playbooks YAML.'],
+['TI · Infraestrutura','No Linux, o comando usado para alterar as permissões de leitura, escrita e execução de um arquivo é',['chown.','chmod.','chgrp.','umask.','passwd.'],1,'chmod altera permissões. chown muda o dono, chgrp muda o grupo e umask define as permissões padrão de arquivos novos.'],
+['TI · Nuvem','Um serviço de e-mail institucional usado diretamente pelo navegador, sem que o órgão gerencie servidores ou aplicação, é exemplo de',['IaaS.','PaaS.','SaaS.','DaaS.','On-premises.'],2,'SaaS entrega o software pronto. IaaS entrega infraestrutura (VMs, rede); PaaS entrega plataforma para desenvolver e implantar.'],
+['TI · Segurança','A técnica que analisa o código-fonte em busca de vulnerabilidades sem executar a aplicação é chamada de',['DAST.','pentest caixa-preta.','SAST.','fuzzing.','teste de carga.'],2,'SAST é análise estática, feita no código. DAST e fuzzing testam a aplicação em execução.'],
+['TI · Segurança','Um ataque de ransomware que torna os arquivos de um servidor inacessíveis compromete diretamente qual princípio da segurança da informação?',['Não repúdio.','Disponibilidade.','Autenticidade.','Irretratabilidade.','Legalidade.'],1,'Disponibilidade é a garantia de acesso quando necessário. O ransomware criptografa os dados e impede o acesso, ferindo esse princípio de forma direta.'],
+['TI · Segurança','O backup que copia apenas os arquivos alterados desde o último backup completo, sem considerar backups intermediários, é o',['incremental.','diferencial.','espelho.','completo.','sintético.'],1,'Diferencial: tudo o que mudou desde o último completo. Incremental: só o que mudou desde o último backup de qualquer tipo.'],
+['TI · IA','Quando um modelo de linguagem gera uma resposta convincente, mas factualmente falsa, ocorre o fenômeno chamado',['overfitting.','alucinação.','tokenização.','engenharia de prompt.','fine-tuning.'],1,'Alucinação é a produção de conteúdo falso apresentado com segurança. Overfitting é quando o modelo decora os dados de treino e generaliza mal.']
+],
+tae:[
+['TAE · LDB','Segundo a LDB (Lei nº 9.394/1996), a educação escolar compõe-se de',['educação infantil, ensino fundamental e ensino médio.','educação básica e educação superior.','educação básica, profissional e superior.','ensino regular e educação de jovens e adultos.','educação formal e educação não formal.'],1,'Art. 21: educação básica (infantil, fundamental e médio) e educação superior. A educação profissional integra-se às diferentes etapas, sem ser um nível à parte.'],
+['TAE · LDB','Entre os princípios do ensino previstos no art. 3º da LDB, NÃO consta:',['igualdade de condições para o acesso e permanência na escola.','gratuidade do ensino público em estabelecimentos oficiais.','gestão democrática do ensino público.','obrigatoriedade do ensino religioso confessional.','valorização da experiência extraescolar.'],3,'O ensino religioso tem matrícula facultativa (art. 33) e não é princípio do art. 3º. As demais alternativas estão literalmente no artigo.'],
+['TAE · LDB','Conforme a LDB, a educação profissional técnica de nível médio será desenvolvida nas formas',['presencial e a distância, apenas.','articulada com o ensino médio e subsequente.','integral e parcial.','regular e supletiva.','básica e avançada.'],1,'Art. 36-B: articulada (integrada ou concomitante) e subsequente, para quem já concluiu o ensino médio.'],
+['TAE · LDB','De acordo com a LDB, os estabelecimentos de ensino terão a incumbência de, entre outras,',['definir o currículo nacional comum.','elaborar e executar sua proposta pedagógica.','autorizar o funcionamento de cursos superiores.','fixar o piso salarial do magistério.','credenciar outras instituições.'],1,'Art. 12, I: elaborar e executar sua proposta pedagógica, respeitadas as normas comuns e as do seu sistema de ensino.'],
+['TAE · Avaliação','A avaliação realizada ao longo do processo de ensino, com a finalidade de acompanhar a aprendizagem e reorientar a prática pedagógica, é a avaliação',['somativa.','classificatória.','formativa.','externa.','em larga escala.'],2,'A formativa acontece durante o processo e regula o ensino. A diagnóstica identifica conhecimentos prévios; a somativa faz o balanço ao final de uma etapa.'],
+['TAE · Pedagogia','Na classificação de Libâneo, a pedagogia libertadora, associada a Paulo Freire, pertence às tendências',['liberais tradicionais.','liberais renovadas não diretivas.','liberais tecnicistas.','progressistas.','liberais renovadas progressivistas.'],3,'As tendências progressistas são a libertadora (Freire), a libertária e a crítico-social dos conteúdos. As liberais incluem a tradicional, as renovadas e a tecnicista.'],
+['TAE · Pedagogia','O conceito de zona de desenvolvimento proximal, que expressa a distância entre o que o aluno faz sozinho e o que faz com ajuda, foi proposto por',['Jean Piaget.','Lev Vygotsky.','B. F. Skinner.','Henri Wallon.','Emilia Ferreiro.'],1,'Vygotsky, na abordagem histórico-cultural, destaca a mediação do outro mais experiente no desenvolvimento.'],
+['TAE · Trabalho pedagógico','A justaposição de disciplinas diferentes em torno de um tema, sem que haja integração ou troca efetiva entre elas, caracteriza a',['interdisciplinaridade.','transdisciplinaridade.','multidisciplinaridade.','disciplinaridade cruzada.','metadisciplinaridade.'],2,'Na multidisciplinaridade as disciplinas tratam o mesmo tema lado a lado. Na interdisciplinaridade há troca e integração; na transdisciplinaridade as fronteiras se dissolvem.'],
+['TAE · Diversidade','A obrigatoriedade do estudo da história e cultura afro-brasileira e indígena nos estabelecimentos de ensino fundamental e médio está prevista na LDB por meio de alterações feitas pelas Leis',['8.069/1990 e 10.098/2000.','10.639/2003 e 11.645/2008.','11.892/2008 e 12.711/2012.','13.005/2014 e 13.146/2015.','9.784/1999 e 11.091/2005.'],1,'A Lei 10.639/2003 incluiu o art. 26-A (cultura afro-brasileira) e a Lei 11.645/2008 acrescentou a temática indígena.'],
+['TAE · Inclusão','A Lei nº 10.048/2000 trata, principalmente, de',['acessibilidade em edificações e transportes.','prioridade de atendimento a determinados grupos de pessoas.','diretrizes curriculares da educação especial.','reserva de vagas em concursos públicos.','financiamento da educação inclusiva.'],1,'A Lei 10.048 garante prioridade de atendimento (pessoas com deficiência, idosos, gestantes, lactantes, entre outros). A Lei 10.098 trata das normas de acessibilidade.'],
+['TAE · EPT','O Decreto nº 5.840/2006 instituiu, no âmbito federal, o',['Programa Nacional de Alimentação Escolar.','Programa Nacional de Integração da Educação Profissional com a Educação Básica na Modalidade de Educação de Jovens e Adultos (PROEJA).','Programa Universidade para Todos.','Plano Nacional de Educação.','Catálogo Nacional de Cursos Técnicos.'],1,'O PROEJA integra educação profissional e educação básica para jovens e adultos.'],
+['TAE · Gestão escolar','Segundo a LDB, um dos princípios da gestão democrática do ensino público é',['a escolha do diretor exclusivamente por concurso.','a participação dos profissionais da educação na elaboração do projeto pedagógico da escola.','a definição do currículo apenas pela secretaria de educação.','a cobrança de taxas para manutenção da escola.','a supressão dos conselhos escolares.'],1,'Art. 14: participação dos profissionais da educação na elaboração do projeto pedagógico e das comunidades escolar e local em conselhos escolares ou equivalentes.']
+]};
+const SIMS=[
+ {id:'ti-full',nome:'402 · Analista de TI · prova completa (45 questões)',parts:[['port',6],['leg',8],['gest',5],['rl',4],['ti',22]]},
+ {id:'tae-full',nome:'412 · TAE · prova completa (40 questões)',parts:[['port',6],['leg',8],['gest',5],['info',6],['tae',12]]},
+ {id:'ti-esp',nome:'Específicos de Analista de TI (30 questões)',parts:[['ti',30]]},
+ {id:'tae-esp',nome:'Específicos de TAE (12 questões)',parts:[['tae',12]]},
+ {id:'gerais',nome:'Conhecimentos gerais · Português, Legislação e Gestão (19 questões)',parts:[['port',6],['leg',8],['gest',5]]},
+ {id:'rapido',nome:'Revisão rápida · 10 questões sorteadas de tudo',parts:[['*',10]]}
+];
+$('#simSel').innerHTML=SIMS.map(s=>'<option value="'+s.id+'">'+s.nome+'</option>').join('');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+let cur=null,timer=null;
+function drawHist(){const hs=store.get('ifpa.hist',[]);$('#hist').innerHTML=hs.length?hs.slice(0,8).map(x=>'<li><span>'+x.d+' · '+x.n+'</span><span class="num">'+x.ok+'/'+x.t+' ('+Math.round(100*x.ok/x.t)+'%)</span></li>').join(''):'<li class="lede">Nenhum simulado feito ainda.</li>';
+ if(hs.length){const b=hs.reduce((m,x)=>x.ok/x.t>m.ok/m.t?x:m);$('#best').textContent=Math.round(100*b.ok/b.t)+'%';$('#bestNote').textContent=b.n+' · '+b.d}}
+drawHist();
+
+$('#simGo').addEventListener('click',()=>{
+ const s=SIMS.find(x=>x.id===$('#simSel').value),shuf=$('#simShuffle').checked;let qs=[];
+ s.parts.forEach(([k,n])=>{const pool=k==='*'?Object.values(Q).flat():Q[k];qs=qs.concat((shuf?shuffle(pool):pool).slice(0,n))});
+ if(shuf&&s.id==='rapido')qs=shuffle(qs);
+ cur={s,qs,ans:new Array(qs.length).fill(null),done:false,t0:Date.now()};
+ $('#simStart').hidden=true;$('#simRun').hidden=false;$('#simResult').hidden=true;$('#simTitle').textContent=s.nome;$('#simEnd').disabled=false;
+ renderQs();clearInterval(timer);timer=setInterval(updTimer,1000);updTimer();window.scrollTo({top:0});
+});
+function updTimer(){if(!cur)return;const sec=Math.floor((Date.now()-cur.t0)/1000);const lim=Math.round(cur.qs.length*205);
+ $('#simTimer').innerHTML=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')+' <span class="pill '+(sec>lim?'alert':'ok')+'">meta '+Math.floor(lim/60)+' min</span>';
+ $('#simProg').textContent=cur.ans.filter(a=>a!==null).length+'/'+cur.qs.length}
+function renderQs(){const L='ABCDE';
+ $('#simQs').innerHTML=cur.qs.map((q,i)=>{const a=cur.ans[i];
+  return '<div class="q" id="q'+i+'"><div class="meta"><span class="pill">Questão '+(i+1)+'</span><span class="pill info">'+q[0]+'</span>'+(cur.done?(a===q[3]?'<span class="pill ok">acertou</span>':a===null?'<span class="pill warn">em branco</span>':'<span class="pill alert">errou</span>'):'')+'</div><p class="stem">'+q[1]+'</p><div class="opts">'+
+  q[2].map((o,j)=>{let cls='opt';if(cur.done){if(j===q[3])cls+=' right';else if(j===a)cls+=' wrong'}
+   return '<button class="'+cls+'" data-q="'+i+'" data-o="'+j+'" aria-pressed="'+(a===j)+'"'+(cur.done?' disabled':'')+'><span class="L">'+L[j]+'</span><span>'+o+'</span></button>'}).join('')+
+  '</div>'+(cur.done?'<div class="expl"><b>Gabarito: '+L[q[3]]+'.</b> '+q[4]+'</div>':'')+'</div>'}).join('');
+}
+$('#simQs').addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b||cur.done)return;const i=+b.dataset.q,j=+b.dataset.o;cur.ans[i]=cur.ans[i]===j?null:j;
+ b.parentElement.querySelectorAll('.opt').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.o===cur.ans[i]));updTimer()});
+$('#simEnd').addEventListener('click',()=>{if(!cur||cur.done)return;cur.done=true;clearInterval(timer);updTimer();
+ const ok=cur.ans.filter((a,i)=>a===cur.qs[i][3]).length,t=cur.qs.length,pct=Math.round(100*ok/t),sec=Math.floor((Date.now()-cur.t0)/1000);
+ const by={};cur.qs.forEach((q,i)=>{const k=q[0].split(' · ')[0];by[k]=by[k]||[0,0];by[k][1]++;if(cur.ans[i]===q[3])by[k][0]++});
+ const zero=Object.entries(by).filter(([k,v])=>v[0]===0).map(([k])=>k);
+ $('#simResult').hidden=false;$('#simResult').innerHTML='<div class="card"><h3>Resultado</h3><div class="score">'+
+  '<div class="card"><span class="eyebrow">Acertos</span><div class="big num">'+ok+'/'+t+'</div></div>'+
+  '<div class="card"><span class="eyebrow">Aproveitamento</span><div class="big num">'+pct+'%</div><span class="pill '+(pct>=70?'ok':pct>=50?'warn':'alert')+'">'+(pct>=70?'competitivo':pct>=50?'aprovado, pouco folga':'abaixo do mínimo')+'</span></div>'+
+  '<div class="card"><span class="eyebrow">Tempo</span><div class="big num">'+Math.floor(sec/60)+' min</div><span class="lede">'+(sec/t/60).toFixed(1).replace('.',',')+' min por questão</span></div></div>'+
+  '<div class="bars" style="margin-top:6px">'+Object.entries(by).map(([k,[a,b]])=>'<div class="bar"><span>'+k+'</span><div class="track"><div class="fill" style="width:'+Math.round(100*a/b)+'%"></div></div><b>'+a+'/'+b+'</b></div>').join('')+'</div>'+
+  (zero.length?'<div class="callout alert"><strong>Zerou: '+zero.join(', ')+'</strong><p>Na prova real, zerar uma disciplina elimina, mesmo com nota alta no resto.</p></div>':'')+
+  '<p class="lede">Com nota de corte alta, mire em 70% ou mais. Leia os comentários abaixo de cada questão.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="simAgain">Novo simulado</button></div></div>';
+ const hs=store.get('ifpa.hist',[]);hs.unshift({d:new Date().toLocaleDateString('pt-BR'),n:cur.s.nome.split(' (')[0],ok,t});store.set('ifpa.hist',hs.slice(0,30));drawHist();
+ renderQs();$('#simEnd').disabled=true;window.scrollTo({top:0});
+ $('#simAgain').addEventListener('click',quit)});
+function quit(){clearInterval(timer);cur=null;$('#simRun').hidden=true;$('#simStart').hidden=false;window.scrollTo({top:0})}
+$('#simQuit').addEventListener('click',quit);
+})();
+</script>
+
+</body>
+</html>
